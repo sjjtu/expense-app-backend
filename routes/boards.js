@@ -63,12 +63,17 @@ router.route('/:id').delete((req, res) => {
     Board.findByIdAndDelete(req.params.id)
         .then(board => {
             counter = 0;
-            for (let recordId of board.records) {
-                Record.findByIdAndDelete(recordId)
-                    .then(record => {
-                        counter += 1;
-                        if (board.records.length == counter) res.json(`Board ${board.name} deleted.`);
-                    })
+            if (board.records.length==0){
+                res.json(`Board ${board.name} deleted.`);
+            }
+            else {
+                for (let recordId of board.records) {
+                    Record.findByIdAndDelete(recordId)
+                        .then(record => {
+                            counter += 1;
+                            if (board.records.length == counter) res.json(`Board ${board.name} deleted.`);
+                        })
+                }
             }
         })
         
