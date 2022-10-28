@@ -23,9 +23,15 @@ router.route('/create').post((req, res) => {
         categories
     });
 
-    newCategoriesList.save()
+    try{
+        newCategoriesList.save()
         .then((result) => res.json({'msg':'CategoriesList created!', '_id':result._id}))
-        .catch(err => res.status(400).json('Error: ' + err));
+    }
+    catch(err){
+        err => res.status(400).json('Error: ' + err);
+    }
+    
+    
 });
   
 module.exports = router;
