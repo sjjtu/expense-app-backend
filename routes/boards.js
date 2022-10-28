@@ -24,7 +24,7 @@ router.route('/create').post((req, res) => {
         records,
         categories
     });
-
+    
     newBoard.save()
         .then((result) => res.json({'msg':'Board created!', '_id':result._id}))
         .catch(err => res.status(400).json('Error: ' + err));
@@ -130,13 +130,10 @@ router.route('/:id/createRecord').post((req, res) => {  // TODO: check if board 
             })
 
             board.records.push(newRecord.id);    
-            board.save()
-                .then( () => {
-                    
-                    newRecord.save()
-                    .then( () => res.json(`Record ${newRecord.id} created in Board ${board.name}.`))
-                    
-            })
+            newRecord.save()
+            .then(() => board.save())
+            .then( () => res.json(`Record ${newRecord.id} created in Board ${board.name}.`))
+            .catch(err => res.status(400).json('Error: invalid value' + err))
         })
                     
 
