@@ -87,6 +87,7 @@ router.route('/:id/update').post((req, res) => {
 
             if (req.body.description) board.description = req.body.description;
             if (req.body.name) board.name = req.body.name;
+            if (req.body.users) board.users = req.body.users;
 
             board.save()
                 .then(() => res.json('Board updated!'))

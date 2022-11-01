@@ -14,15 +14,11 @@ router.route('/:id').get((req, res) => {
 })
 
 router.route('/create').post((req, res) => {
-    const surname = req.body.surname;
-    const lastname = req.body.lastname;
-    const email = req.body.email;
+    const name = req.body.name;
     const boards = [];
   
     const newUser = new User({
-      surname,
-      lastname,
-      email,
+      name,
       boards,
     });
   
@@ -45,7 +41,7 @@ router.route('/addboard/:id').post((req, res) => {
 
 router.route('/:id').delete((req, res) => {
     User.findByIdAndDelete(req.params.id)
-        .then(user => res.json(`User ${user.surname} deleted.`))
+        .then(user => res.json(`User ${user.name} deleted.`))
         .catch(err => res.status(400).json('Error: ' + err));
     });
 
